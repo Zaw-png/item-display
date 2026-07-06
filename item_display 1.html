@@ -1,0 +1,154 @@
+<!--671188_Sec542-->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Item Display</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 24px;
+        background-color: #f6f8fb;
+        color: #1f2937;
+      }
+
+      h1 {
+        margin-bottom: 8px;
+      }
+
+      .summary {
+        margin-bottom: 18px;
+      }
+
+      table {
+        width: 100%;
+        max-width: 760px;
+        border-collapse: collapse;
+        background-color: white;
+      }
+
+      th,
+      td {
+        border: 1px solid #d1d5db;
+        padding: 10px;
+        text-align: left;
+      }
+
+      th {
+        background-color: #e5eefb;
+      }
+
+      tr:nth-child(even) {
+        background-color: #f9fafb;
+      }
+
+      .available {
+        color: #047857;
+        font-weight: bold;
+      }
+
+      .out-of-stock {
+        color: #b91c1c;
+        font-weight: bold;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Item Display</h1>
+    <p class="summary" id="summary"></p>
+
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Name</th>
+          <th>Category</th>
+          <th>Price</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody id="item-list"></tbody>
+    </table>
+
+    <script>
+      const emptyObject = {};
+      console.log("Empty object:", emptyObject);
+
+      emptyObject.email = "test@mail.com";
+      console.log("Object after adding email:", emptyObject);
+
+      const item = {
+        name: "Pencil",
+        price: 19.99,
+      };
+      console.log("Item object:", item);
+
+      const itemWithCategory = {
+        ...item,
+        id: 1001,
+        category: "Stationery",
+        inStock: true,
+      };
+      console.log("Item with category:", itemWithCategory);
+
+      const items = [];
+
+      items.push(itemWithCategory);
+      items.push({
+        id: 1002,
+        name: "Notebook",
+        category: "Stationery",
+        price: 49.99,
+        inStock: true,
+      });
+      items.push({
+        id: 1003,
+        name: "Calculator",
+        category: "Electronics",
+        price: 199.99,
+        inStock: false,
+      });
+      items.push({
+        id: 1004,
+        name: "Backpack",
+        category: "Bag",
+        price: 899.99,
+        inStock: true,
+      });
+
+      console.log("Array of JSON items:", items);
+
+      const discountedItems = items.map((currentItem) => {
+        return {
+          ...currentItem,
+          discountPrice: currentItem.price * 0.9,
+        };
+      });
+      console.log("Items copied with spread operator:", discountedItems);
+
+      const itemList = document.getElementById("item-list");
+      const summary = document.getElementById("summary");
+      let totalPrice = 0;
+
+      discountedItems.forEach((currentItem) => {
+        totalPrice += currentItem.discountPrice;
+
+        const statusText = currentItem.inStock ? "Available" : "Out of stock";
+        const statusClass = currentItem.inStock ? "available" : "out-of-stock";
+
+        itemList.innerHTML += `
+          <tr>
+            <td>${currentItem.id}</td>
+            <td>${currentItem.name}</td>
+            <td>${currentItem.category}</td>
+            <td>$${currentItem.discountPrice.toFixed(2)}</td>
+            <td class="${statusClass}">${statusText}</td>
+          </tr>
+        `;
+      });
+
+      summary.innerHTML = `There are ${discountedItems.length} items. Total discount price is $${totalPrice.toFixed(2)}.`;
+    </script>
+  </body>
+</html>

@@ -1,0 +1,128 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Item Display</title>
+    <script src="item-list 1.js"></script>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f3f4f6;
+        margin: 0;
+        color: #111827;
+      }
+
+      .main-container {
+        width: 700px;
+        max-width: calc(100% - 40px);
+        margin: 40px auto;
+        padding: 32px;
+        background-color: white;
+        box-shadow: 0 8px 24px rgba(15, 23, 42, 0.12);
+      }
+
+      h2 {
+        margin-top: 0;
+        font-size: 32px;
+      }
+
+      .select {
+        width: 280px;
+        height: 36px;
+        padding: 6px 10px;
+        font-size: 16px;
+      }
+
+      hr {
+        margin: 16px 0;
+      }
+
+      .prop-row {
+        display: grid;
+        grid-template-columns: 280px 1fr;
+        min-height: 36px;
+        align-items: center;
+        font-size: 18px;
+      }
+
+      .prop-name {
+        font-weight: bold;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="main-container">
+      <div>
+        <h2>Item Display</h2>
+      </div>
+      <div>
+        <select name="item-list" id="item-list" class="select"></select>
+      </div>
+      <hr />
+      <div class="prop-row">
+        <div class="prop-name">ID</div>
+        <div id="item-id"></div>
+      </div>
+      <div class="prop-row">
+        <div class="prop-name">Name</div>
+        <div id="item-name"></div>
+      </div>
+      <div class="prop-row">
+        <div class="prop-name">Category</div>
+        <div id="item-category"></div>
+      </div>
+      <div class="prop-row">
+        <div class="prop-name">Inventory Amt.</div>
+        <div id="item-inventory"></div>
+      </div>
+      <div class="prop-row">
+        <div class="prop-name">List price</div>
+        <div id="item-price"></div>
+      </div>
+    </div>
+    <script>
+      const itemSelect = document.getElementById("item-list");
+      const itemId = document.getElementById("item-id");
+      const itemName = document.getElementById("item-name");
+      const itemCategory = document.getElementById("item-category");
+      const itemInventory = document.getElementById("item-inventory");
+      const itemPrice = document.getElementById("item-price");
+
+      function clearItemDetail() {
+        itemId.innerHTML = "";
+        itemName.innerHTML = "";
+        itemCategory.innerHTML = "";
+        itemInventory.innerHTML = "";
+        itemPrice.innerHTML = "";
+      }
+
+      function displayItemDetail(item) {
+        itemId.innerHTML = item.id;
+        itemName.innerHTML = item.name;
+        itemCategory.innerHTML = item.category;
+        itemInventory.innerHTML = item.inventory;
+        itemPrice.innerHTML = item.price;
+      }
+
+      itemSelect.innerHTML = '<option value=""></option>';
+
+      items.forEach((item) => {
+        itemSelect.innerHTML += `<option value="${item.id}">${item.name}</option>`;
+      });
+
+      itemSelect.addEventListener("change", () => {
+        if (itemSelect.value === "") {
+          clearItemDetail();
+          return;
+        }
+
+        const selectedItem = items.find((item) => {
+          return item.id === Number(itemSelect.value);
+        });
+
+        displayItemDetail(selectedItem);
+      });
+
+      clearItemDetail();
+    </script>
+  </body>
+</html>
